@@ -2,23 +2,25 @@
 layout: default
 ---
 
-<article class="post">
+<style>
+  .post-wrap{max-width:860px;margin:24px auto;}
+  .post-meta{color:#6a737d;margin:6px 0 18px}
+  .post-content{line-height:1.75;font-size:16px}
+  .back{display:inline-block;margin-top:20px}
+</style>
+
+<div class="post-wrap">
   <h1>{{ page.title }}</h1>
-  <p style="color:#666">
+  <div class="post-meta">
     작성자: <strong>{{ page.author }}</strong>
     · 조회수: {{ page.views | default: 0 }}
     · 작성일: {{ page.date | date: "%Y-%m-%d" }}
-  </p>
+    {%- if page.pinned == true -%} · <span style="color:#c2185b">📌 상단</span>{%- endif -%}
+  </div>
 
   <div class="post-content">
     {{ content }}
   </div>
 
-  <p><a href="{{ "/" | relative_url }}">← 목록으로</a></p>
-</article>
-
-<style>
-  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif; margin: 20px; }
-  .post-content { margin-top: 1rem; line-height: 1.7; }
-  a { color: #0366d6; text-decoration: none; }
-</style>
+  <a class="back" href="{{ "/" | relative_url }}">← 목록으로</a>
+</div>
