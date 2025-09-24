@@ -36,4 +36,35 @@ title: 공지사항
     </thead>
     <tbody>
       {%- assign pinned = site.posts | where: "pinned", true -%}
-      {%
+      {%- for post in pinned -%}
+      <tr>
+        <td class="col-no">📌 상단</td>
+        <td class="title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </td>
+        <td>{{ post.author }}</td>
+        <td class="col-views">{{ post.views | default: 0 }}</td>
+        <td class="col-date">{{ post.date | date: "%Y-%m-%d" }}</td>
+      </tr>
+      {%- endfor -%}
+
+      {%- assign normal = site.posts | where_exp: "p", "p.pinned != true" -%}
+      {%- for post in normal -%}
+      <tr>
+        <td class="col-no">{{ forloop.index }}</td>
+        <td class="title">
+          <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+          <div class="meta">{{ post.excerpt | strip_html | truncate: 120 }}</div>
+        </td>
+        <td>{{ post.author }}</td>
+        <td class="col-views">{{ post.views | default: 0 }}</td>
+        <td class="col-date">{{ post.date | date: "%Y-%m-%d" }}</td>
+      </tr>
+      {%- endfor -%}
+
+      {%- if pinned.size == 0 and normal.size == 0 -%}
+      <tr><td colspan="5" class="empty">등록된 공지가 없습니다.</td></tr>
+      {%- endif -%}
+    </tbody>
+  </table>
+</div>
