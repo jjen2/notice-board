@@ -1,0 +1,7 @@
+title: 공지사항
+description: GitHub Pages + Jekyll 게시판
+theme: minima               # GitHub Pages 기본 지원 테마
+locale: ko_KR
+timezone: Asia/Seoul
+url: "https://jjen2.github.io"  # 본인 계정으로 변경
+baseurl: "/notice-board"           # 저장소 이름과 동일하게
