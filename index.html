@@ -3,32 +3,37 @@ layout: default
 title: 공지사항
 ---
 
-<h1>공지사항</h1>
+<!-- 페이지 전용 스타일(가장 간단한 방법) -->
+<style>
+  .board-wrap{max-width:980px;margin:24px auto;}
+  .board-title{font-size:28px;font-weight:700;margin:4px 0 16px;}
+  table.board{width:100%;border-collapse:collapse;font-size:15px}
+  .board th,.board td{padding:12px 10px;border-bottom:1px solid #eaecef;text-align:left}
+  .board thead th{background:#f7f7f9;font-weight:600}
+  .col-no{width:80px;text-align:center}
+  .col-views{width:100px;text-align:center}
+  .col-date{width:140px;text-align:center}
+  .pin{display:inline-block;margin-right:6px;color:#c2185b}
+  .title a{color:#24292f;text-decoration:none}
+  .title a:hover{text-decoration:underline}
+  .meta{color:#6a737d;font-size:13px;margin-top:3px}
+  .empty{padding:40px 0;text-align:center;color:#6a737d}
+</style>
 
-<!-- 상단 고정 글 -->
-{% assign pinned = site.posts | where: "pinned", true %}
-{% if pinned and pinned.size > 0 %}
-  <h3>📌 상단 고정</h3>
-  <ul>
-  {% for post in pinned %}
-    <li>
-      <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-      — {{ post.author }} · 조회수: {{ post.views | default: 0 }}
-      · {{ post.date | date: "%Y-%m-%d" }}
-    </li>
-  {% endfor %}
-  </ul>
-{% endif %}
+<div class="board-wrap">
+  <h1 class="board-title">공지사항</h1>
 
-<!-- 일반 글(비고정) -->
-<h3>최근 공지</h3>
-<ul>
-{% assign normal = site.posts | where_exp: "p", "p.pinned != true" %}
-{% for post in normal %}
-  <li>
-    <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
-    — {{ post.author }} · 조회수: {{ post.views | default: 0 }}
-    · {{ post.date | date: "%Y-%m-%d" }}
-  </li>
-{% endfor %}
-</ul>
+  <!-- 상단 고정 + 일반글을 한 테이블에 출력 -->
+  <table class="board">
+    <thead>
+      <tr>
+        <th class="col-no">구분</th>
+        <th>제목</th>
+        <th>작성자</th>
+        <th class="col-views">조회수</th>
+        <th class="col-date">등록일</th>
+      </tr>
+    </thead>
+    <tbody>
+      {%- assign pinned = site.posts | where: "pinned", true -%}
+      {%
